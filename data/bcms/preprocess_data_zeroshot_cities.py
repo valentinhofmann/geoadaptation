@@ -1,10 +1,10 @@
 from collections import Counter
-
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from geopy.geocoders import Nominatim
 from transformers import AutoTokenizer
+from data.scandi.helpers_scandi import load_lines
 
 from helpers import *
 
@@ -12,7 +12,7 @@ from helpers import *
 def main():
 
     # Load dev data
-    data = list()
+    list()
     with open('dev.txt', 'r') as f:
         for l in f:
             if l.strip() == '':
