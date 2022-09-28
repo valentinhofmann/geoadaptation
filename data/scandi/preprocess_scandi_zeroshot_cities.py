@@ -9,6 +9,11 @@ from helpers_scandi import *
 import json
 
 def main():
+
+    # # locator = Nominatim(user_agent='nlp_geocoding')
+    # # locator.geocode("Zagreb", language="en")
+    # # loc = locator.reverse('57.70, 18.66', language = 'da')
+
     # Load dev data
     # data_jsons = [json.loads(x) for x in load_lines("/ceph/gglavas/data/geoadaptation/Scandi/scandi_geoloc_zero.json")]
     # data = [(x["latitude"], x["longitude"], x["text"]) for x in data_jsons]
@@ -59,7 +64,7 @@ def main():
     data = pd.read_pickle("/ceph/gglavas/data/geoadaptation/Scandi/locations_pandas_df.pkl")
 
     # Get BERTic cities
-    tok = AutoTokenizer.from_pretrained('flax-community/roberta-base-scandinavian', model_max_length=128)
+    tok = AutoTokenizer.from_pretrained('vesteinn/ScandiBERT', model_max_length=128)
     vocab_bertic = set(tok.vocab)
 
     url_sv = 'https://en.wikipedia.org/wiki/List_of_cities_in_Sweden'
@@ -88,11 +93,11 @@ def main():
             if url2country[url] == "sv":
                 cities_country.append("Göteborg")
         
-        cities_country = {c : tok.tokenize(c)[0] for c in cities_country if len(tok.tokenize(c)) <= 2}
+        cities_country = {c : tok.tokenize(c)[0] for c in cities_country if len(tok.tokenize(c)) == 1}
         cities_bertic.update([c for c in cities_country if cities_country[c] in vocab_bertic])
         country2cities[url2country[url]] = cities_bertic #[cities_country[c] for c in cities_country if c in vocab_bertic]
     
-    data['firsttok'] = data.location.apply(lambda x: tok.tokenize(x)[0] if x else '')
+    #data['firsttok'] = data.location.apply(lambda x: tok.tokenize(x)[0] if x else '')
     print(len(cities_bertic))
 
     # Filter data
@@ -103,7 +108,7 @@ def main():
     city_counter = Counter(data.location)
     cities_filtered = set([c for c, count in city_counter.most_common() if count >= theta])
     data = data[data.location.isin(cities_filtered)]
-    data = data[['location', 'firsttok' 'text']]
+    data = data[['location', 'text']]
     print(data.shape)
 
     # Downsample to 100 posts per city

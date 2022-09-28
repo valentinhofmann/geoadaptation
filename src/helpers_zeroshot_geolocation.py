@@ -17,18 +17,20 @@ class DatasetForZeroShot(Dataset):
 
 
 class CollatorForZeroShot:
-    def __init__(self, tok, data, locations):
+    def __init__(self, tok, data, locations, prompt):
         self.tok = tok
         self.data = data
         self.classes = sorted([self.tok.convert_tokens_to_ids(l) for l in set(locations)])
+        self.prompt = prompt
 
     def prompt_encode(self, batch):
         texts, idxes, classes = list(), list(), list()
         for t, l in batch:
-            if self.data == 'bcms':
-                t += '. To je {}'.format(l)
-            else:
-                t += '. Das ist {}'.format(l)
+            t += '. ' + self.prompt + " " + l
+            #if self.data == 'bcms':
+            #    t += '. To je {}'.format(l)
+            #else:
+            #    t += '. Das ist {}'.format(l)
             t_encoded = self.tok.encode(t, padding=True, truncation=True)
             texts.append(t_encoded)
             idxes.append(len(t_encoded) - 2)

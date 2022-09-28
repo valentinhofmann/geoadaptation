@@ -1,6 +1,7 @@
 import argparse
 import pickle
 import random
+from tokenize import String
 
 import numpy as np
 import pandas as pd
@@ -12,6 +13,8 @@ from transformers import AutoTokenizer
 from helpers_zeroshot_geolocation import *
 from model_geoadaptation import *
 
+def predict_single(prompt, cities):
+    return None
 
 def main():
     random.seed(123)
@@ -74,7 +77,7 @@ def main():
         tok = AutoTokenizer.from_pretrained(args.model, model_max_length=512)
 
         # Load data loaders
-        collator = CollatorForZeroShot(tok, args.data, dataset.locations)
+        collator = CollatorForZeroShot(tok, args.data, dataset.locations, "To je" if ("bcms" in args.model) else "")
         print(collator.classes)
         data_loader = DataLoader(dataset, batch_size=args.batch_size, collate_fn=collator)
 
