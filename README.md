@@ -4,16 +4,15 @@ This repository contains the code for the TACL 2024 paper [Geographic Adaptation
 
 # Usage 
 
-To replicate the geoadaptation procedure, use the scripts `start_geoadaptation.sh` and `start_geoadaptation_mtl.sh`.
+The main code for conducting geoadaptation can be found in `src/main_geoadaptation.py`.
 
+To replicate the geoadaptation experiments from the paper, use the scripts `src/start_geoadaptation.sh` and `src/start_geoadaptation_mtl.sh`.
 
-To replicate the experiment on fine-tuned geolocation prediction, use the scripts `start_geolocation.sh` and `start_geolocation_mtl.sh`.
+To replicate the experiments on fine-tuned geolocation prediction from the paper, use the scripts `src/start_geolocation.sh` and `src/start_geolocation_mtl.sh`.
 
+To replicate the experiments on zero-shot geolocation prediction from the paper, use the script `src/start_zeroshot_geolocation.sh`.
 
-To replicate the experiments on zero-shot geolocation prediction, use the script `start_zeroshot_geolocation.sh`.
-
-
-To replicate the experiments on zero-shot dialect feature prediction, use the script `start_zeroshot_dialect.sh`.
+To replicate the experiments on zero-shot dialect feature prediction from the paper, use the script `src/start_zeroshot_dialect.sh`.
 
 # Citation
 
