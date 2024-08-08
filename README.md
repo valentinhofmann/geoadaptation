@@ -1,4 +1,4 @@
-# Geoadaptation
+# Geoadaptation of Language Models
 
 This repository contains the code for the TACL 2024 paper [Geographic Adaptation of Pretrained Language Models](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00652/120648/Geographic-Adaptation-of-Pretrained-Language).
 
